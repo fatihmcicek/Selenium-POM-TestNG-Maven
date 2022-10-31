@@ -18,5 +18,4 @@ public class BaseTest {
     public void quitDriver() {
         driver.quit();
     }
-
 }

@@ -1,13 +1,10 @@
 package selenium.pom.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.testng.Assert;
 import selenium.pom.base.BasePage;
 
-
-public class HomePage extends BasePage {
+public class MainPage extends BasePage {
 
     protected WebElement changeElement;
 
@@ -54,34 +51,33 @@ public class HomePage extends BasePage {
     private final By USER_NAME_INPUT = By.cssSelector("input[data-qa='login-email']");
     private final By USER_EMAIL_INPUT = By.cssSelector("input[placeholder='Password']");
 
-    public HomePage(WebDriver driver) {
+    public MainPage(WebDriver driver) {
         super(driver);
     }
 
-    public HomePage loadPage() {
+    public MainPage loadPage() {
         loadPage("/");
         return this;
     }
 
-    public HomePage isOnHomePage() {
+    public MainPage isOnHomePage() {
         String e = driver.getCurrentUrl();
         Assert.assertEquals(e, "https://automationexercise.com//");
         return this;
     }
 
-    public HomePage clickSignupLoginButton() {
+    public MainPage clickSignupLoginButton() {
         clickElement(CLICK_SIGNUP_LOGIN_BUTTON);
         return this;
     }
 
-    public HomePage verifyUserSignUp() {
+    public MainPage verifyUserSignUp() {
         String e = driver.findElement(VERIFY_USER_SIGNUP).getText();
         Assert.assertEquals(e, "New User Signup!");
         return this;
     }
 
-
-    public HomePage enterNameAndEmailAddress() throws InterruptedException {
+    public MainPage enterNameAndEmailAddress() throws InterruptedException {
         driver.findElement(NEW_USER_NAME_INPUT).sendKeys(faker.name().firstName());
         Thread.sleep(1500);
         driver.findElement(NEW_USER_EMAIL_INPUT).sendKeys(faker.internet().emailAddress());
@@ -89,12 +85,12 @@ public class HomePage extends BasePage {
         return this;
     }
 
-    public HomePage clickSignUpButton() {
+    public MainPage clickSignUpButton() {
         clickElement(CLICK_SIGNUP_BUTTON);
         return this;
     }
 
-    public HomePage verifyAccountInformation() throws InterruptedException {
+    public MainPage verifyAccountInformation() throws InterruptedException {
         String e = driver.findElement(VERIFY_ACCOUNT_INFORMATION).getText();
         Assert.assertEquals(e, "ENTER ACCOUNT INFORMATION");
         Thread.sleep(1500);
@@ -102,7 +98,7 @@ public class HomePage extends BasePage {
     }
 
 
-    public HomePage fillDetailsForm() {
+    public MainPage fillDetailsForm() {
         changeElement = driver.findElement(CHOOSE_TITLE);
         changeElement.click();
         sendKey(PASSWORD, faker.internet().password());
@@ -142,29 +138,28 @@ public class HomePage extends BasePage {
         return this;
     }
 
-    public HomePage verifyCreatedAccount() {
+    public MainPage verifyCreatedAccount() {
         String e = driver.findElement(By.cssSelector("h2[class='title text-center'] b")).getText();
         System.out.println(e);
         Assert.assertEquals(e, "ACCOUNT CREATED!");
         return this;
     }
 
-    public HomePage clickContinueButton() {
+    public MainPage clickContinueButton() {
         clickElement(clickContinueBtn);
         return this;
     }
 
-    public HomePage setDeleteAccount() {
+    public MainPage setDeleteAccount() {
         clickElement(DELETE_ACCOUNT);
         return this;
     }
 
-    public HomePage verifyAccountDeleted() throws InterruptedException {
+    public void verifyAccountDeleted() throws InterruptedException {
         String e = driver.findElement(VERIFY_ACCOUNT_DELETED).getText();
         Assert.assertEquals(e, "ACCOUNT DELETED!");
         Thread.sleep(1000);
         clickElement(CONTINUE_BUTTON_ELEMENT);
-        return this;
     }
 
     //--------- Test Case 2 ---------
@@ -173,19 +168,19 @@ public class HomePage extends BasePage {
     private final By enterCorrectPassword = By.cssSelector("input[placeholder='Password']");
     private final By clickLoginButtonElement = By.cssSelector("button[data-qa='login-button']");
 
-    public HomePage setVerifyLoginYourAccount() {
+    public MainPage setVerifyLoginYourAccount() {
         String e = driver.findElement(verifyLoginYourAccount).getText();
         Assert.assertEquals(e, "Login to your account");
         return this;
     }
 
-    public HomePage enterCorrectEmailAndPassword() {
+    public MainPage enterCorrectEmailAndPassword() {
         sendKey(enterCorrectEmail, "notest123@gmail.com");
         sendKey(enterCorrectPassword, "notest123");
         return this;
     }
 
-    public HomePage clickLoginButton() {
+    public MainPage clickLoginButton() {
         clickElement(clickLoginButtonElement);
         return this;
     }
@@ -193,13 +188,12 @@ public class HomePage extends BasePage {
     //--------- Test Case 3 ---------
     private final By incorrectEmailAndPasswordElement = By.cssSelector("body > section:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > form:nth-child(2) > p:nth-child(4)");
 
-    public HomePage incorrectEmailAndPassword() {
+    public void incorrectEmailAndPassword() {
         String e = driver.findElement(incorrectEmailAndPasswordElement).getText();
         Assert.assertEquals(e, "Your email or password is incorrect!");
-        return this;
     }
 
-    public HomePage enterFakeNameAndEmailAddress() throws InterruptedException {
+    public MainPage enterFakeNameAndEmailAddress() throws InterruptedException {
         driver.findElement(USER_NAME_INPUT).sendKeys(faker.internet().emailAddress());
         Thread.sleep(1500);
         driver.findElement(USER_EMAIL_INPUT).sendKeys(faker.internet().emailAddress());
@@ -208,19 +202,82 @@ public class HomePage extends BasePage {
     }
 
     //--------- Test Case 4 ---------
-
     private final By CLICK_LOGOUT = By.cssSelector("a[href='/logout']");
 
-    public HomePage clickLogout() {
+    public MainPage clickLogout() {
         clickElement(CLICK_LOGOUT);
         return this;
     }
 
     //--------- Test Case 5 ---------
-
-    private final By VERIFY_NEW_USER_SIGNUP = By.cssSelector("div[class='signup-form'] h2");
-    private final By SEND_NAME = By.cssSelector("input[placeholder='Name']");
-    private final By SEND_EMAIL = By.cssSelector("input[data-qa='signup-email']");
-    private final By CLICK_SIGNUP_BUTTON3 = By.cssSelector("button[data-qa='signup-button']");
     private final By ALREADY_EXIST = By.cssSelector("body > section:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > form:nth-child(2) > p:nth-child(5)");
+
+
+    public MainPage enterAlreadyExist() {
+        sendKey(NEW_USER_NAME_INPUT, "notest123@gmail.com");
+        sendKey(NEW_USER_EMAIL_INPUT, "notest123@gmail.com");
+        return this;
+    }
+
+    public void verifyAlreadyExist() {
+        String e = driver.findElement(ALREADY_EXIST).getText();
+        Assert.assertEquals(e, "Email Address already exist!");
+    }
+
+    //-------- Test Case 6 ------------
+    private final By CONTACT_US_ICON = By.cssSelector("a[href='/contact_us']");
+    private final By NAME_INPUT = By.cssSelector("input[placeholder='Name']");
+    private final By EMAIL_INPUT = By.cssSelector("input[placeholder='Email']");
+    private final By SUBJECT_INPUT = By.cssSelector("input[placeholder='Subject']");
+    private final By MESSAGE_INPUT = By.cssSelector("#message");
+    private final By SUBMIT_BUTTON = By.cssSelector("input[value='Submit']");
+    private final By SUCCESS_SUBMITTED = By.cssSelector(".status.alert.alert-success");
+    private final By BACK_TO_HOME = By.cssSelector("a[class='btn btn-success'] span");
+
+    public MainPage clickContactUsIcon() {
+        clickElement(CONTACT_US_ICON);
+        return this;
+    }
+
+    public MainPage enterFillForm() {
+        sendKey(NAME_INPUT, faker.name().firstName());
+        sendKey(EMAIL_INPUT, faker.internet().emailAddress());
+        sendKey(SUBJECT_INPUT, faker.company().name());
+        sendKey(MESSAGE_INPUT, faker.demographic().educationalAttainment());
+        // Choose File
+        clickElement(SUBMIT_BUTTON);
+        return this;
+    }
+
+    public MainPage clickOKButton() throws InterruptedException {
+        Thread.sleep(2000);
+        Alert alert_box = driver.switchTo().alert();
+        alert_box.accept();
+        return this;
+    }
+
+    public MainPage verifySuccessMessage() {
+        String e = driver.findElement(SUCCESS_SUBMITTED).getText();
+        Assert.assertEquals(e, "Success! Your details have been submitted successfully.");
+        return this;
+    }
+
+    public void backToHomePageButton() {
+        clickElement(BACK_TO_HOME);
+    }
+
+    //-------- Test Case 7 ------------
+    private final By CLICK_TEST_CASE = By.cssSelector("a[href='/test_cases']");
+
+    public MainPage clickTestCaseIcon() {
+        clickElement(CLICK_TEST_CASE);
+        return this;
+    }
+
+    public void isOnTestCasePage() {
+        String e = driver.getCurrentUrl();
+        Assert.assertEquals(e, "https://automationexercise.com/test_cases");
+    }
+
+
 }

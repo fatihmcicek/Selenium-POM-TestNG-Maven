@@ -16,7 +16,6 @@ public class BasePage {
     protected WebDriverWait wait;
     protected Faker faker = new Faker();
 
-
     public BasePage(WebDriver driver) {
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         this.driver = driver;
@@ -39,5 +38,4 @@ public class BasePage {
     public void clickElement(By key) {
         wait.until(ExpectedConditions.elementToBeClickable(key)).click();
     }
-
 }
